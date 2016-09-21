@@ -43,7 +43,8 @@ class UsuarioSearch extends Usuario
      */
     public function search($params)
     {
-        $query = Usuario::find()->where(['idEstado' => 1]);
+        $query = Usuario::find()->where(['<>', 'idEstado', 3]);
+
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

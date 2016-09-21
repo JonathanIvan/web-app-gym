@@ -127,4 +127,5 @@ class Usuario extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Estado::className(), ['idEstados' => 'idEstado']);
     }
+
 }

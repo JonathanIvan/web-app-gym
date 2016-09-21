@@ -5,23 +5,22 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Socio;
+use app\models\Membresia;
 
 /**
- * SocioSearch represents the model behind the search form about `app\models\Socio`.
+ * MembresiaSearch represents the model behind the search form about `app\models\Membresia`.
  */
-class SocioSearch extends Socio
+class MembresiaSearch extends Membresia
 {
-    public $Estado;
-
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['idSocio', 'idEstado', 'idUsuarioCreo', 'idUsuario'], 'integer'],
-            [['fechaCreacion', 'Nombre', 'Paterno', 'Materno', 'Telefono', 'Observaciones', 'foto', 'Estado'], 'safe'],
+            [['idMembresia', 'idEstado', 'idUsuarioCreo', 'meses'], 'integer'],
+            [['Nombre', 'fechaCreacion', 'horaInicio', 'horaFinal'], 'safe'],
+            [['Precio'], 'number'],
         ];
     }
 
@@ -43,7 +42,9 @@ class SocioSearch extends Socio
      */
     public function search($params)
     {
-        $query = Socio::find()->where(['<>', 'idEstado', 3]);
+        $query = Membresia::find();
+
+        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -57,24 +58,19 @@ class SocioSearch extends Socio
             return $dataProvider;
         }
 
-        $query->joinWith(['idEstado0']);
-
-
+        // grid filtering conditions
         $query->andFilterWhere([
-            'idSocio' => $this->idSocio,
+            'idMembresia' => $this->idMembresia,
             'idEstado' => $this->idEstado,
             'fechaCreacion' => $this->fechaCreacion,
+            'Precio' => $this->Precio,
             'idUsuarioCreo' => $this->idUsuarioCreo,
-            'idUsuario' => $this->idUsuario,
+            'meses' => $this->meses,
+            'horaInicio' => $this->horaInicio,
+            'horaFinal' => $this->horaFinal,
         ]);
 
-        $query->andFilterWhere(['like', 'Nombre', $this->Nombre])
-            ->andFilterWhere(['like', 'Paterno', $this->Paterno])
-            ->andFilterWhere(['like', 'Materno', $this->Materno])
-            ->andFilterWhere(['like', 'Telefono', $this->Telefono])
-            ->andFilterWhere(['like', 'Estado', $this->Estado])
-            ->andFilterWhere(['like', 'Observaciones', $this->Observaciones])
-            ->andFilterWhere(['like', 'foto', $this->foto]);
+        $query->andFilterWhere(['like', 'Nombre', $this->Nombre]);
 
         return $dataProvider;
     }
