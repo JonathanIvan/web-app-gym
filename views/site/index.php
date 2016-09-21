@@ -1,11 +1,24 @@
 <?php
 
 /* @var $this yii\web\View */
+use yii\helpers\Html;
+use yii\bootstrap\Nav;
+use yii\bootstrap\NavBar;
+use yii\widgets\Breadcrumbs;
+use app\assets\AppAsset;
 
 $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
 
+<?php
+    if(!Yii::$app->user->isGuest){
+
+        echo '<p><a class="btn btn-lg btn-success" href="'.Yii::$app->request->BaseUrl.'/usuario">Usuarios</a></p>';
+
+    }
+
+?>
     <div class="jumbotron">
         <h1>Congratulations!</h1>
 
