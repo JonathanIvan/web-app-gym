@@ -1,5 +1,4 @@
 <?php
-
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -12,9 +11,10 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($modelUsuario, 'Usuario')->textInput(['autofocus' => true]) ?>
 
-    <?= $form->field($modelUsuario, 'Password')->passwordInput() ?>
+    <?= $form->field($modelUsuario, 'Usuario')->textInput(['maxlength' => true], ['autofocus' => true]) ?>
+
+    <?= $form->field($modelUsuario, 'Password')->passwordInput(['maxlength' => true]) ?>
 
     <?=$form->field($modelUsuario, 'Nombre')->dropDownList($roles, ['prompt'=>'-Elije un rol-']) ?>
 
@@ -26,10 +26,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($modelSocio, 'Telefono')->textInput(['autofocus' => true]) ?>
 
-    <div class="form-group">
-        <?= Html::submitButton($modelUsuario->isNewRecord ? 'Registrar' : 'Actualizar', ['class' => $modelUsuario->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
+
+
+  
+	<?php if (!Yii::$app->request->isAjax){ ?>
+	  	<div class="form-group">
+	        <?= Html::submitButton($model->isNewRecord ? 'Registrar' : 'Modificar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+	    </div>
+	<?php } ?>
 
     <?php ActiveForm::end(); ?>
-
+    
 </div>

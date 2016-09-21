@@ -17,9 +17,11 @@ use Yii;
  * @property string $Observaciones
  * @property integer $idUsuarioCreo
  * @property resource $foto
+ * @property integer $idUsuario 
  *
  * @property Registro[] $registros
  * @property Estado $idEstado0
+ * @property Usuario $idUsuario0 
  * @property Usuario $idUsuarioCreo0
  * @property Sociomembresia[] $sociomembresias
  * @property Visita[] $visitas
@@ -40,13 +42,14 @@ class Socio extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idEstado', 'idUsuarioCreo'], 'integer'],
+            [['idEstado', 'idUsuarioCreo', 'idUsuario'], 'integer'],
             [['fechaCreacion'], 'safe'],
             [['foto'], 'string'],
             [['Nombre', 'Paterno', 'Materno', 'Telefono'], 'string', 'max' => 45],
             [['Nombre', 'Paterno', 'Telefono'], 'required'],
             [['Observaciones'], 'string', 'max' => 500],
             [['idEstado'], 'exist', 'skipOnError' => true, 'targetClass' => Estado::className(), 'targetAttribute' => ['idEstado' => 'idEstados']],
+            [['idUsuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['idUsuario' => 'idUsuario']], 
             [['idUsuarioCreo'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['idUsuarioCreo' => 'idUsuario']],
         ];
     }
@@ -67,6 +70,7 @@ class Socio extends \yii\db\ActiveRecord
             'Observaciones' => 'Observaciones',
             'idUsuarioCreo' => 'Id Usuario Creo',
             'foto' => 'Foto',
+            'idUsuario' => 'Id Usuario', 
         ];
     }
 
@@ -85,6 +89,14 @@ class Socio extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Estado::className(), ['idEstados' => 'idEstado']);
     }
+
+     /** 
+    * @return \yii\db\ActiveQuery 
+    */ 
+   public function getIdUsuario0() 
+   { 
+       return $this->hasOne(Usuario::className(), ['idUsuario' => 'idUsuario']); 
+   }
 
     /**
      * @return \yii\db\ActiveQuery

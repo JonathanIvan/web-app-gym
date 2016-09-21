@@ -13,12 +13,14 @@ use Yii;
  * @property string $Nombre
  * @property string $fechaCreacion
  * @property string $Password
+ * @property string $Token
  *
  * @property Entrada[] $entradas
  * @property Membresia[] $membresias
  * @property Producto[] $productos
  * @property Salida[] $salidas
  * @property Socio[] $socios
+ * @property Socio[] $socios0 
  * @property Sociomembresia[] $sociomembresias
  * @property Estado $idEstado0
  */
@@ -44,6 +46,7 @@ class Usuario extends \yii\db\ActiveRecord
             [['Usuario', 'Password', 'Nombre'], 'required'],
             ['Usuario', 'unique'],
             [['Password'], 'string', 'max' => 100, 'min' => 8],
+            [['Token'], 'string', 'max' => 200],
             [['idEstado'], 'exist', 'skipOnError' => true, 'targetClass' => Estado::className(), 'targetAttribute' => ['idEstado' => 'idEstados']],
         ];
     }
@@ -55,11 +58,12 @@ class Usuario extends \yii\db\ActiveRecord
     {
         return [
             'idUsuario' => 'Id Usuario',
-            'idEstado' => 'Id Estado',
+            'idEstado' => 'Estado',
             'Usuario' => 'Usuario',
             'Nombre' => 'Rol',
             'fechaCreacion' => 'Fecha Creacion',
             'Password' => 'Contraseña',
+            'Token' => 'Token',
         ];
     }
 
@@ -101,6 +105,11 @@ class Usuario extends \yii\db\ActiveRecord
     public function getSocios()
     {
         return $this->hasMany(Socio::className(), ['idUsuarioCreo' => 'idUsuario']);
+    }
+
+    public function getSocios0()
+    {
+        return $this->hasMany(Socio::className(), ['idUsuario' => 'idUsuario']); 
     }
 
     /**
