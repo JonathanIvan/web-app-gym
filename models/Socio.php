@@ -60,8 +60,8 @@ class Socio extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idSocio' => 'Id Socio',
-            'idEstado' => 'Id Estado',
+            'idSocio' => 'Clave',
+            'idEstado' => 'Estado',
             'fechaCreacion' => 'Fecha Creacion',
             'Nombre' => 'Nombre',
             'Paterno' => 'Paterno',

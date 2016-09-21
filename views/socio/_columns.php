@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Url;
+use app\models\Estado;
 
 return [
     [
@@ -16,7 +17,19 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'idEstado',
+        'attribute'=>'Nombre',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'Paterno',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'Materno',
+    ],
+      [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'Telefono',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -24,20 +37,17 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'Nombre',
+        'attribute'=>'Estado',
+        'value' => function($modelSocio){
+            return Estado::findOne($modelSocio->idEstado)->Estado;
+        }
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'Paterno',
-    ],
+    
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'Materno',
     // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'Telefono',
-    // ],
+  
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'Observaciones',
