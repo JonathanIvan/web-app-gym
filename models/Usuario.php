@@ -58,7 +58,7 @@ class Usuario extends \yii\db\ActiveRecord
     {
         return [
             'idUsuario' => 'Id Usuario',
-            'idEstado' => 'Id Estado',
+            'idEstado' => 'Estado',
             'Usuario' => 'Usuario',
             'Nombre' => 'Rol',
             'fechaCreacion' => 'Fecha Creacion',
@@ -66,15 +66,6 @@ class Usuario extends \yii\db\ActiveRecord
             'Token' => 'Token',
         ];
     }
-
-     public function relations()
-        {
-                // NOTE: you may need to adjust the relation name and the related
-                // class name for the relations automatically generated below.
-                return array(
-                        'idEstadosFK' => array(self::BELONGS_TO, 'id', 'idEstado'),                 
-                );
-        }
 
     /**
      * @return \yii\db\ActiveQuery

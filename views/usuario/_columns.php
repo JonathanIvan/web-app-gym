@@ -14,23 +14,31 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'idEstado',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'idEstado',
-        'value' => function($modelUsuario){
-            return Estado::findOne($modelUsuario->idEstado)->Estado;
-        }
-    ],    
-    [
-        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'Usuario',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'Nombre',
     ],
+     [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'fechaCreacion',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'Estado',
+        'value' => function($modelUsuario){
+            return Estado::findOne($modelUsuario->idEstado)->Estado;
+        }
+    ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'idEstado',
+    //     'value' => function($modelUsuario){
+    //         return Estado::findOne($modelUsuario->idEstado)->Estado;
+    //     }
+    // ],    
+    
     // [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'idEstado0',
@@ -38,10 +46,7 @@ return [
     //         return Estado::findOne($modelUsuario->idEstado)->Estado;
     //     }
     // ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'fechaCreacion',
-    ],
+   
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'Password',

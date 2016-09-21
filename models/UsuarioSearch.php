@@ -12,14 +12,16 @@ use app\models\Usuario;
  */
 class UsuarioSearch extends Usuario
 {
+    public $Estado;
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['idUsuario'], 'integer'],
-            [['Usuario', 'Nombre', 'fechaCreacion', 'Password', 'Token', 'idEstado'], 'safe'],
+            [['idUsuario', 'idEstado'], 'integer'],
+            [['Usuario', 'Nombre', 'fechaCreacion', 'Password', 'Token', 'Estado'], 'safe'],
         ];
     }
 
@@ -41,7 +43,7 @@ class UsuarioSearch extends Usuario
      */
     public function search($params)
     {
-        $query = Usuario::find();
+        $query = Usuario::find()->where(['idEstado' => 1]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -55,16 +57,17 @@ class UsuarioSearch extends Usuario
             return $dataProvider;
         }
 
-        $query->with('idEstado0');
+        $query->joinWith(['idEstado0']);
 
         $query->andFilterWhere([
             'idUsuario' => $this->idUsuario,
-            'idEstado0.Estado' => $this->idEstado0,
+            'idEstado' => $this->idEstado,
             'fechaCreacion' => $this->fechaCreacion,
         ]);
 
         $query->andFilterWhere(['like', 'Usuario', $this->Usuario])
             ->andFilterWhere(['like', 'Nombre', $this->Nombre])
+            ->andFilterWhere(['like', 'Estado', $this->Estado])
             ->andFilterWhere(['like', 'Password', $this->Password])
             ->andFilterWhere(['like', 'Token', $this->Token]);
 
