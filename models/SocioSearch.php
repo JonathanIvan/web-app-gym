@@ -43,7 +43,7 @@ class SocioSearch extends Socio
      */
     public function search($params)
     {
-        $query = Socio::find()->where(['<>', 'idEstado', 3]);
+        $query = Socio::find()->where(['!=', 'idEstado', 3])->andWhere(['!=', 'idSocio', 1000]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

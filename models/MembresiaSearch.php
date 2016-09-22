@@ -12,6 +12,8 @@ use app\models\Membresia;
  */
 class MembresiaSearch extends Membresia
 {
+
+    public $Estado;
     /**
      * @inheritdoc
      */
@@ -19,7 +21,7 @@ class MembresiaSearch extends Membresia
     {
         return [
             [['idMembresia', 'idEstado', 'idUsuarioCreo', 'meses'], 'integer'],
-            [['Nombre', 'fechaCreacion', 'horaInicio', 'horaFinal'], 'safe'],
+            [['Nombre', 'fechaCreacion', 'horaInicio', 'horaFinal', 'Estado'], 'safe'],
             [['Precio'], 'number'],
         ];
     }
@@ -42,9 +44,7 @@ class MembresiaSearch extends Membresia
      */
     public function search($params)
     {
-        $query = Membresia::find();
-
-        // add conditions that should always apply here
+        $query = Membresia::find()->where(['!=', 'idEstado', 3])->andWhere(['!=', 'idMembresia', 1]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -58,7 +58,9 @@ class MembresiaSearch extends Membresia
             return $dataProvider;
         }
 
-        // grid filtering conditions
+        $query->joinWith(['idEstado0']);
+        
+
         $query->andFilterWhere([
             'idMembresia' => $this->idMembresia,
             'idEstado' => $this->idEstado,
@@ -70,7 +72,8 @@ class MembresiaSearch extends Membresia
             'horaFinal' => $this->horaFinal,
         ]);
 
-        $query->andFilterWhere(['like', 'Nombre', $this->Nombre]);
+        $query->andFilterWhere(['like', 'Nombre', $this->Nombre])
+              ->andFilterWhere(['like', 'Estado', $this->Estado]);
 
         return $dataProvider;
     }

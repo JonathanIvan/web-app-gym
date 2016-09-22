@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Url;
+use yii\helpers\Html;
 use app\models\Estado;
 
 
@@ -57,13 +58,44 @@ return [
     // ],
     [
         'class' => 'kartik\grid\ActionColumn',
+        'template'=>'{view}{update}{delete}{activar}',
+        'buttons' => [
+            'activar' => function ($url, $modelUsuario, $key) {
+                
+                 return $modelUsuario->idEstado == 1 ? 
+
+                        Html::a(
+                            '<span class="glyphicon glyphicon-remove"></span>',
+                            ['desactivar', 'id' => $modelUsuario->idUsuario], 
+                            [
+                                'title' => 'Activar',
+                                'data-pjax' => '1',
+                            ]
+                        )
+
+                        :
+
+                        Html::a(
+                            '<span class="glyphicon glyphicon-ok"></span>',
+                            ['activar', 'id' => $modelUsuario->idUsuario], 
+                            [
+                                'title' => 'Desactivar',
+                                'data-pjax' => '1',
+                            ]
+                        )
+
+                        ;
+            },
+        ],
         'dropdown' => false,
         'vAlign'=>'middle',
         'urlCreator' => function($action, $model, $key, $index) { 
                 return Url::to([$action,'id'=>$key]);
         },
+
         'viewOptions'=>['role'=>'modal-remote','title'=>'View','data-toggle'=>'tooltip'],
         'updateOptions'=>['role'=>'modal-remote','title'=>'Update', 'data-toggle'=>'tooltip'],
+        // 'activeOptions'=>['role'=>'modal-remote','title'=>'Update', 'data-toggle'=>'tooltip'],
         'deleteOptions'=>['role'=>'modal-remote','title'=>'Delete', 
                           'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
                           'data-request-method'=>'post',

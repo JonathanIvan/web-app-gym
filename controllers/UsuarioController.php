@@ -33,7 +33,7 @@ class UsuarioController extends Controller
                 'only' => ['index', 'view', 'create', 'update', 'delete'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'activar', 'desactivar'],
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
@@ -349,6 +349,45 @@ class UsuarioController extends Controller
             return $this->redirect(['index']);
         }
        
+    }
+
+
+        // $request = Yii::$app->request;
+        
+        // $modelUsuario = $this->findModel($id);
+        // $modelUsuario->idEstado = 3;
+        // $modelUsuario->save();
+
+        // if($request->isAjax){
+        //     /*
+        //     *   Process for ajax request
+        //     */
+        //     Yii::$app->response->format = Response::FORMAT_JSON;
+        //     return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
+        // }else{
+        //     /*
+        //     *   Process for non-ajax request
+        //     */
+        //     return $this->redirect(['index']);
+        // }
+    public function actionDesactivar($id)
+    {
+        $request = Yii::$app->request;
+
+        $modelUsuario = $this->findModel($id);
+        $modelUsuario->idEstado = 2;
+        $modelUsuario->save();
+
+        if($request->isAjax)
+        {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax'];
+        }else{
+             Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax'];
+            // return $this->redirect(['index']);
+        }
+
     }
 
     /**

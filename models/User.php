@@ -90,6 +90,7 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->Password === sha1($password);
     }
 
+
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
@@ -105,6 +106,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return in_array(Yii::$app->user->identity->Nombre, $arr_role);
     }
+    
     public static function isActive()
     {
         return Yii::$app->user->identity->idEstado == self::STATUS_ACTIVE;

@@ -54,13 +54,13 @@ class Membresia extends \yii\db\ActiveRecord
         return [
             'idMembresia' => 'Id Membresia',
             'Nombre' => 'Nombre',
-            'idEstado' => 'Id Estado',
-            'fechaCreacion' => 'Fecha Creacion',
+            'idEstado' => 'Estado',
+            'fechaCreacion' => 'Fecha de Creación',
             'Precio' => 'Precio',
             'idUsuarioCreo' => 'Id Usuario Creo',
-            'meses' => 'meses de la membresia',
-            'horaInicio' => 'hora que comienza la membresia para horarios especiales',
-            'horaFinal' => 'hora en que termina la membresia para horarios especiales',
+            'meses' => 'Meses',
+            'horaInicio' => 'Hora Inicio',
+            'horaFinal' => 'Hora Final',
         ];
     }
 

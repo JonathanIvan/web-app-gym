@@ -18,6 +18,7 @@ $this->title = 'My Yii Application';
 
         echo '<p><a class="btn btn-lg btn-success" href="'.Yii::$app->request->BaseUrl.'/socio">Socios</a></p>';
 
+        echo '<p><a class="btn btn-lg btn-success" href="'.Yii::$app->request->BaseUrl.'/membresia">Membresia</a></p>';
     }
 
 ?>
