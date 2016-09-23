@@ -68,7 +68,13 @@ return [
                             '<span class="glyphicon glyphicon-remove"></span>',
                             ['desactivar', 'id' => $modelUsuario->idUsuario], 
                             [
-                                'title' => 'Activar',
+                                'title' => 'Desactivar',
+                                "class"=>"btn btn-circle-micro btn-danger",
+                                'role'=>'modal-remote',
+                                'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
+                                'data-request-method'=>'post',
+                                'data-confirm-title'=>'Desactivar',
+                                'data-confirm-message'=>'¿Estás seguro de desactivar al usuario?',
                                 'data-pjax' => '1',
                             ]
                         )
@@ -79,7 +85,13 @@ return [
                             '<span class="glyphicon glyphicon-ok"></span>',
                             ['activar', 'id' => $modelUsuario->idUsuario], 
                             [
-                                'title' => 'Desactivar',
+                                'title' => 'Activar',
+                                "class"=>"btn btn-circle-micro btn-success",
+                                'role'=>'modal-remote',
+                                'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
+                                'data-request-method'=>'post',
+                                'data-confirm-title'=>'Activar',
+                                'data-confirm-message'=>'¿Estás seguro de activar al usuario?',
                                 'data-pjax' => '1',
                             ]
                         )

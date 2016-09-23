@@ -351,25 +351,13 @@ class UsuarioController extends Controller
        
     }
 
-
-        // $request = Yii::$app->request;
-        
-        // $modelUsuario = $this->findModel($id);
-        // $modelUsuario->idEstado = 3;
-        // $modelUsuario->save();
-
-        // if($request->isAjax){
-        //     /*
-        //     *   Process for ajax request
-        //     */
-        //     Yii::$app->response->format = Response::FORMAT_JSON;
-        //     return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
-        // }else{
-        //     /*
-        //     *   Process for non-ajax request
-        //     */
-        //     return $this->redirect(['index']);
-        // }
+    /**
+     * Desactiva un usuario.
+     * For ajax request will return json object
+     * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
     public function actionDesactivar($id)
     {
         $request = Yii::$app->request;
@@ -382,10 +370,35 @@ class UsuarioController extends Controller
         {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax'];
+
         }else{
-             Yii::$app->response->format = Response::FORMAT_JSON;
+            return $this->redirect(['index']);
+        }
+
+    }
+
+     /**
+     * Activa un usuario.
+     * For ajax request will return json object
+     * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionActivar($id)
+    {
+        $request = Yii::$app->request;
+
+        $modelUsuario = $this->findModel($id);
+        $modelUsuario->idEstado = 1;
+        $modelUsuario->save();
+
+        if($request->isAjax)
+        {
+            Yii::$app->response->format = Response::FORMAT_JSON;
             return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax'];
-            // return $this->redirect(['index']);
+
+        }else{
+            return $this->redirect(['index']);
         }
 
     }
