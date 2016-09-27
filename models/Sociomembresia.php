@@ -38,6 +38,8 @@ class Sociomembresia extends \yii\db\ActiveRecord
     {
         return [
             [['idEstado', 'idUsuarioCreo', 'idSocio', 'idMembresia'], 'integer'],
+            [['idMembresia', 'fechaInicioMembresia'], 'required'],
+
             [['fechaCreacion', 'fechaInicioMembresia'], 'safe'],
             [['Precio'], 'number'],
             [['idEstado'], 'exist', 'skipOnError' => true, 'targetClass' => Estado::className(), 'targetAttribute' => ['idEstado' => 'idEstados']],
@@ -58,7 +60,7 @@ class Sociomembresia extends \yii\db\ActiveRecord
             'fechaCreacion' => 'Fecha Creacion',
             'idUsuarioCreo' => 'Id Usuario Creo',
             'idSocio' => 'Id Socio',
-            'idMembresia' => 'Id Membresia',
+            'idMembresia' => 'Membresia',
             'Precio' => 'Precio',
             'fechaInicioMembresia' => 'Fecha Inicio Membresia',
         ];

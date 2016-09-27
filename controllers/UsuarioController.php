@@ -176,7 +176,7 @@ class UsuarioController extends Controller
             *   Process for non-ajax request
             */
             if ($modelUsuario->load($request->post()) && $modelUsuario->save()) {
-                return $this->redirect(['view', 'id' => $modelUsuario->idUsuario]);
+                return $this->redirect(['index']);
             } else {
                 return $this->render('create', [
                     'modelUsuario' => $modelUsuario, 
@@ -241,15 +241,7 @@ class UsuarioController extends Controller
                     }                    
                     
                 }
-                // return [
-                //     'forceReload'=>'#crud-datatable-pjax',
-                //     'title'=> "Usuario #".$id,
-                //     'content'=>$this->renderAjax('view', [
-                //         'model' => $model,
-                //     ]),
-                //     'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                //             Html::a('Modificar',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                // ];    
+              
             }else{
                  return [
                     'title'=> "Modificar Usuario #".$id,
@@ -274,7 +266,7 @@ class UsuarioController extends Controller
 
                     if($modelUsuario->save() && $modelSocio->save() ){
 
-                        return $this->redirect(['view', 'id' => $modelUsuario->idUsuario]);                         
+                        return $this->redirect(['index']);                         
                     
                     }                    
                     
@@ -333,7 +325,8 @@ class UsuarioController extends Controller
         $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
         foreach ( $pks as $pk ) {
             $model = $this->findModel($pk);
-            $model->delete();
+            $model->idEstado = 3;
+            $model->save();
         }
 
         if($request->isAjax){

@@ -5,11 +5,18 @@ namespace app\controllers;
 use Yii;
 use app\models\Socio;
 use app\models\SocioSearch;
+use app\models\User;
+use app\models\Sociomembresia;
+use app\models\Membresia;
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\db\Expression;
 
 /**
  * SocioController implements the CRUD actions for Socio model.
@@ -22,6 +29,30 @@ class SocioController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index', 'view', 'create', 'update', 'delete'],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'activar', 'desactivar', 'membresia'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            $valid_roles = ["admin"];
+                            return User::roleInArray($valid_roles) && User::isActive();
+                        }
+                    ],
+                     [
+                        'actions' => ['index', 'create', 'update'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            $valid_roles = ["empleado"];
+                            return User::roleInArray($valid_roles) && User::isActive();
+                        }
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -56,12 +87,13 @@ class SocioController extends Controller
     public function actionView($id)
     {   
         $request = Yii::$app->request;
+        $model = $this->findModel($id);
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "Socio #".$id,
+                    'title'=> "Socio ".$model->Nombre,
                     'content'=>$this->renderAjax('view', [
-                        'model' => $this->findModel($id),
+                        'model' => $model,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                             Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
@@ -82,6 +114,7 @@ class SocioController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
+        $idUsuarioLogueado = Yii::$app->user->identity->id;
         $model = new Socio();  
 
         if($request->isAjax){
@@ -91,31 +124,39 @@ class SocioController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new Socio",
+                    'title'=> "Registrar socio",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Registrar',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
-                return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new Socio",
-                    'content'=>'<span class="text-success">Create Socio success</span>',
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-        
-                ];         
+            }else if($model->load($request->post()) && $model->validate()){
+
+                $model->idEstado = 1;                    
+                $model->fechaCreacion = new Expression('NOW()');
+                $model->idUsuarioCreo = $idUsuarioLogueado;
+               
+                if($model->save()){
+                    return [
+                        'forceReload'=>'#crud-datatable-pjax',
+                        'title'=> "Registrar socio",
+                        'content'=>'<span class="text-success">Socio registrado con éxito</span>',
+                        'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::a('Registrar otro',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+            
+                    ];   
+                }
+                      
             }else{           
                 return [
-                    'title'=> "Create new Socio",
+                    'title'=> "Registrar socio",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Registrar',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }
@@ -124,7 +165,7 @@ class SocioController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->idSocio]);
+                return $this->redirect(['index']);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -153,31 +194,31 @@ class SocioController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update Socio #".$id,
+                    'title'=> "Modificar socio ".$model->Nombre,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Guardar',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Socio #".$id,
+                    'title'=> "Modificar socio ".$model->Nombre,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                            Html::a('Edit',['Guardar','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
             }else{
                  return [
-                    'title'=> "Update Socio #".$id,
+                    'title'=> "Modificar socio ".$model->Nombre,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Guardar',['class'=>'btn btn-primary','type'=>"submit"])
                 ];        
             }
         }else{
@@ -185,7 +226,7 @@ class SocioController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->idSocio]);
+                return $this->redirect(['index']);
             } else {
                 return $this->render('update', [
                     'model' => $model,
@@ -204,7 +245,9 @@ class SocioController extends Controller
     public function actionDelete($id)
     {
         $request = Yii::$app->request;
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->idEstado = 3;
+        $model->save();
 
         if($request->isAjax){
             /*
@@ -235,7 +278,8 @@ class SocioController extends Controller
         $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
         foreach ( $pks as $pk ) {
             $model = $this->findModel($pk);
-            $model->delete();
+            $model->idEstado = 3;
+            $model->save();
         }
 
         if($request->isAjax){
@@ -251,6 +295,151 @@ class SocioController extends Controller
             return $this->redirect(['index']);
         }
        
+    }
+
+    /**
+     * Creates a new Membresia with Socio model.
+     * For ajax request will return json object
+     * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionMembresia($idSocio)
+    {
+        $request = Yii::$app->request;
+        $idUsuarioLogueado = Yii::$app->user->identity->id;
+        
+        $model = new Sociomembresia();  
+        $modelSocio = $this->findModel($idSocio);
+
+        $membresias = ArrayHelper::map(Membresia::find()->asArray()->all(), 'idMembresia', 'Nombre');
+
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Agregar membresia éste socio",
+                    'content'=>$this->renderAjax('membresia', [
+                        'model' => $model,
+                        'membresias'=>$membresias,
+                        'modelSocio' => $modelSocio
+                    ]),
+                    'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Agregar',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }else if($model->load($request->post()) && $model->validate()){
+
+                $replaceFecha = str_replace('/', '-', $model->fechaInicioMembresia);
+                $fechaInicio = date('Y-m-d', strtotime($replaceFecha));
+                
+
+                $model->idEstado = 1;                    
+                $model->fechaCreacion = new Expression('NOW()');
+                $model->idUsuarioCreo = $idUsuarioLogueado;
+                $model->idSocio = $idSocio;
+                $model->fechaInicioMembresia = $fechaInicio;
+                $modelMembresia = Membresia::findOne($model->idMembresia);
+                $model->Precio = $modelMembresia->Precio;
+
+                if($model->save() && $modelSocio->save()){
+                    return [
+                        'forceReload'=>'#crud-datatable-pjax',
+                        'title'=> "Membresia de socio",
+                        'content'=>'<span class="text-success">Socio agregado a la membresia con éxito</span>',
+                        'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::a('Agregar otro',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+            
+                    ];   
+                }
+                      
+            }else{           
+                return [
+                    'title'=> "Agregar membresia éste socio",
+                    'content'=>$this->renderAjax('membresia', [
+                        'model' => $model,
+                        'membresias'=>$membresias,
+                        'modelSocio' => $modelSocio
+
+
+                    ]),
+                    'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Agregar',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            if ($model->load($request->post()) && $model->save()) {
+                return $this->redirect(['index']);
+            } else {
+                return $this->render('membresia', [
+                    'model' => $model,
+                    'membresias'=>$membresias,
+                        'modelSocio' => $modelSocio
+
+
+                ]);
+            }
+        }
+       
+    }
+
+
+    /**
+     * Desactiva un usuario.
+     * For ajax request will return json object
+     * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDesactivar($id)
+    {
+        $request = Yii::$app->request;
+
+        $model = $this->findModel($id);
+        $model->idEstado = 2;
+        $model->save();
+
+        if($request->isAjax)
+        {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax'];
+
+        }else{
+            return $this->redirect(['index']);
+        }
+
+    }
+
+     /**
+     * Activa un usuario.
+     * For ajax request will return json object
+     * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionActivar($id)
+    {
+        $request = Yii::$app->request;
+
+        $model = $this->findModel($id);
+        $model->idEstado = 1;
+        $model->save();
+
+        if($request->isAjax)
+        {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax'];
+
+        }else{
+            return $this->redirect(['index']);
+        }
+
     }
 
     /**

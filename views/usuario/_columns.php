@@ -58,8 +58,12 @@ return [
     // ],
     [
         'class' => 'kartik\grid\ActionColumn',
-        'template'=>'{view}{update}{delete}{activar}',
+        'template'=>'{activar}{view}{update}{delete}',
         'buttons' => [
+        'view'=> function ($url, $model, $key) {
+                
+                 return false;
+            },
             'activar' => function ($url, $modelUsuario, $key) {
                 
                  return $modelUsuario->idEstado == 1 ? 

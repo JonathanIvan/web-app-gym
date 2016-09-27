@@ -11,10 +11,6 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'idEstado')->textInput() ?>
-
-    <?= $form->field($model, 'fechaCreacion')->textInput() ?>
-
     <?= $form->field($model, 'Nombre')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'Paterno')->textInput(['maxlength' => true]) ?>
@@ -25,11 +21,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'Observaciones')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'idUsuarioCreo')->textInput() ?>
 
-    <?= $form->field($model, 'foto')->textInput() ?>
-
-    <?= $form->field($model, 'idUsuario')->textInput() ?>
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

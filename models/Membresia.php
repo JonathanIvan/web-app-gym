@@ -52,7 +52,7 @@ class Membresia extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idMembresia' => 'Id Membresia',
+            'idMembresia' => 'Membresia',
             'Nombre' => 'Nombre',
             'idEstado' => 'Estado',
             'fechaCreacion' => 'Fecha de Creación',
