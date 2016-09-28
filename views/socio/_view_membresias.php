@@ -15,10 +15,7 @@ use yii\widgets\DetailView;
             //     'label' => 'Número de Membresia',
             //     'value' => $model->idSocioMembresia,
             // ],
-            // [                      // the owner name of the model
-            //     'label' => 'Estado',
-            //     'value' => $model->idEstado0->Estado,
-            // ],
+            
              [                      // the owner name of the model
                 'label' => 'Membresia',
                 'value' => $model->idMembresia0->Nombre,
@@ -34,6 +31,10 @@ use yii\widgets\DetailView;
              [                      // the owner name of the model
                 'label' => 'Fecha de Vencimiento',
                 'value' => date('d/m/Y', strtotime(''.$model->idMembresia0->meses.' month', strtotime($model->fechaInicioMembresia) )),
+            ],
+            [                      // the owner name of the model
+                'label' => 'Estado',
+                'value' => $model->idEstado0->Estado,
             ],
             // 'idEstado',
             // 'fechaCreacion',
