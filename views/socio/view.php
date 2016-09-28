@@ -10,7 +10,6 @@ use yii\widgets\DetailView;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            // 'idSocio',
             [                      
                 'label' => 'Número de Socio',
                 'value' => $model->idSocio,
@@ -19,24 +18,9 @@ use yii\widgets\DetailView;
                 'label' => 'Nombre de Socio',
                 'value' => $model->Nombre. " ".$model->Paterno." ".$model->Materno,
             ],
-            // [                      // the owner name of the model
-            //     'label' => 'Estado',
-            //     'value' => $model->idEstado0->Estado,
-            // ],
-            //  [                      // the owner name of the model
-            //     'label' => 'Membresia',
-            //     'value' => $model->sociomembresias[0]->idMembresia,
-            // ],
-            // 'idEstado',
-            // 'fechaCreacion',
-            // 'Nombre',
-            // 'Paterno',
-            // 'Materno',
+
             'Telefono',
             'Observaciones',
-            // 'idUsuarioCreo',
-            // 'foto',
-            // 'idUsuario',
         ],
     ]) 
 

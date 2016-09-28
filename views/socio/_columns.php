@@ -44,27 +44,6 @@ return [
         }
     ],
     
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'Materno',
-    // ],
-  
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'Observaciones',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'idUsuarioCreo',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'foto',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'idUsuario',
-    // ],
     [
         'class' => 'kartik\grid\ActionColumn',
         'template'=>'{view}{update}{delete}{membresia}{activar}',
@@ -75,13 +54,8 @@ return [
                             ['membresia', 'idSocio' => $model->idSocio], 
                             [
                                 'title' => 'Agregar Membresia',
-                                // "class"=>"btn btn-circle-micro btn-danger",
                                 'role'=>'modal-remote',
                                 'data-toggle'=>'tooltip',
-                                // 'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
-                                // 'data-request-method'=>'post',
-                                // 'data-confirm-title'=>'Desactivar',
-                                // 'data-confirm-message'=>'¿Estás seguro de desactivar al usuario?',
                                 'data-pjax' => '1',
                             ]
                         );
