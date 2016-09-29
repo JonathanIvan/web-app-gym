@@ -34,7 +34,7 @@ class SocioController extends Controller
                 'only' => ['index', 'view', 'create', 'update', 'delete'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'activar', 'desactivar', 'membresia'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'activar', 'desactivar', 'membresia', 'eliminar'],
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
@@ -58,6 +58,7 @@ class SocioController extends Controller
                 'actions' => [
                     'delete' => ['post'],
                     'bulk-delete' => ['post'],
+                    'eliminar' => ['post'],
                 ],
             ],
         ];
@@ -348,9 +349,9 @@ class SocioController extends Controller
                     return [
                         'forceReload'=>'#crud-datatable-pjax',
                         'title'=> "Membresia de socio",
-                        'content'=>'<span class="text-success">Socio agregado a la membresia con éxito</span>',
+                        'content'=>'<span class="text-success">Se agregó membresia de '.$model->idMembresia0->Nombre.' al socio '.$model->idSocio0->Nombre.' con éxito</span>',
                         'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::a('Agregar otro',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                                Html::a('Agregar otra membresia',['membresia', 'idSocio'=>$modelSocio->idSocio],['class'=>'btn btn-primary','role'=>'modal-remote'])
             
                     ];   
                 }
@@ -440,6 +441,23 @@ class SocioController extends Controller
             return $this->redirect(['index']);
         }
 
+    }
+
+    public function actionEliminar($id){
+        $request = Yii::$app->request;
+
+        $model = Sociomembresia::findOne($id);
+        $model->idEstado = 3;
+        $model->save();
+
+        if($request->isAjax)
+        {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax'];
+
+        }else{
+            return $this->redirect(['index']);
+        }
     }
 
     /**

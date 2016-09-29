@@ -130,3 +130,7 @@ a.desc:after {
   line-height: 2.00;
   border-radius: 70px;
 }
+
+.right{
+  right: 0;
+}
