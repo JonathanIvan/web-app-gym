@@ -69,7 +69,7 @@ return [
                             ['desactivar', 'id' => $model->idSocio], 
                             [
                                 'title' => 'Dar de baja al socio',
-                                "class"=>"btn btn-circle-micro btn-danger",
+                                // "class"=>"btn btn-circle-micro btn-danger",
                                 'role'=>'modal-remote',
                                 'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
                                 'data-request-method'=>'post',
@@ -86,7 +86,7 @@ return [
                             ['activar', 'id' => $model->idSocio], 
                             [
                                 'title' => 'Dar de alta al socio',
-                                "class"=>"btn btn-circle-micro btn-success",
+                                // "class"=>"btn btn-circle-micro btn-success",
                                 'role'=>'modal-remote',
                                 'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
                                 'data-request-method'=>'post',
