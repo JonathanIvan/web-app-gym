@@ -35,6 +35,22 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'fechaCreacion',
+        // 'value' => function($modelSocio){
+        //     $fecha = date($modelSocio->fechaCreacion, 'd/m/Y H:i:s')
+        //     return $fecha;
+        // },
+        'value'=>function ($model) {
+            $fecha = DateTime::createFromFormat('Y-m-d H:i:s', $model->fechaCreacion);
+            // $fechaMostrar = $fecha->format('d-m-Y');
+
+            return "<span class='badge' style='background-color: #eee'> </span>  <code>" . 
+                $fechaMostrar . '</code>';
+        },
+        // 'filterType'=>GridView::FILTER_COLOR,
+        'vAlign'=>'middle',
+        'format'=>'raw',
+        'width'=>'150px',
+        'noWrap'=>true
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
