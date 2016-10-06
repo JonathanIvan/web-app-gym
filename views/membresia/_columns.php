@@ -35,10 +35,10 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'horaFinal',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'fechaCreacion',
-    ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'fechaCreacion',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'Estado',
