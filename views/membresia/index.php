@@ -27,9 +27,9 @@ CrudAsset::register($this);
             'toolbar'=> [
                 ['content'=>
                     Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'],
-                    ['role'=>'modal-remote','title'=> 'Create new Membresias','class'=>'btn btn-default']).
+                    ['role'=>'modal-remote','title'=> 'Registrar nueva Membresia','class'=>'btn btn-default']).
                     Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
-                    ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
+                    ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Actualizar']).
                     '{toggleData}'.
                     '{export}'
                 ],
@@ -39,10 +39,10 @@ CrudAsset::register($this);
             'responsive' => true,          
             'panel' => [
                 'type' => 'primary', 
-                'heading' => '<i class="glyphicon glyphicon-list"></i> Membresias listing',
-                'before'=>'<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
+                'heading' => '<i class="glyphicon glyphicon-list"></i> Todas las membresias',
+                'before'=>'<em>* Cambiar el tamaño de las columnas de la tabla como una hoja de cálculo, arrastrando los bordes de columna.</em>',
                 'after'=>BulkButtonWidget::widget([
-                            'buttons'=>Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete All',
+                            'buttons'=>Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; Eliminar seleccionados',
                                 ["bulk-delete"] ,
                                 [
                                     "class"=>"btn btn-danger btn-xs",
