@@ -5,9 +5,12 @@ namespace app\controllers;
 use Yii;
 use app\models\Producto;
 use app\models\ProductoSearch;
+use app\models\User;
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
 
@@ -22,6 +25,30 @@ class ProductoController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index', 'view', 'create', 'update', 'delete'],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'allow' =>true,
+                        'roles' => ['@'],
+                        'matchCallback' => function($rule, $action){
+                            $valid_roles = ["admin"];
+                            return User::roleInArray($valid_roles) && User::isActive();
+                        }
+                    ],
+                    [
+                        'actions' => ['index', 'create', 'update'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function($rule, $action){
+                            $valid_roles = ["empleado"];
+                            return User::roleInArray($valid_roles) && User::isActive();
+                        }
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
