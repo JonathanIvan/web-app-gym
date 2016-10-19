@@ -5,6 +5,8 @@ namespace app\controllers;
 use Yii;
 use app\models\Membresia;
 use app\models\MembresiaSearch;
+use app\models\User;
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
