@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Url;
+use app\models\Estado;
 
 return [
     [
@@ -10,10 +11,10 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-        [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'idProducto',
-    ],
+    //     [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'idProducto',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'Nombre',
@@ -22,26 +23,35 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'Descripcion',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'idEstado',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'fechaCreacion',
-    ],
+    
     // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'Precio',
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'idEstado',
     // ],
+ 
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'Precio',
+    ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'idUsuarioCreo',
     // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'Costo',
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'Costo',
+    ],
+    //    [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'fechaCreacion',
     // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'Estado',
+        'value' => function($modelProducto){
+            return Estado::findOne($modelProducto->idEstado)->Estado;
+        }
+    ],
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,

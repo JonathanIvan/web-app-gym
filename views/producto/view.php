@@ -10,14 +10,17 @@ use yii\widgets\DetailView;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'idProducto',
+            // 'idProducto',
             'Nombre',
             'Descripcion',
-            'idEstado',
-            'fechaCreacion',
+             [
+            'label' => 'Estado',
+            'value' => $model->idEstado0->Estado,
+            ],
             'Precio',
-            'idUsuarioCreo',
+            // 'idUsuarioCreo',
             'Costo',
+            'fechaCreacion',
         ],
     ]) ?>
 
