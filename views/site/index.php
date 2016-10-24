@@ -14,11 +14,12 @@ $this->title = 'My Yii Application';
 <?php
     if(!Yii::$app->user->isGuest){
 
-        echo '<p><a class="btn btn-lg btn-success" href="'.Yii::$app->request->BaseUrl.'/usuario">Usuarios</a></p>';
+        echo '<p><a class="btn btn-lg btn-success" href="'.Yii::$app->request->BaseUrl.'/index.php/usuario">Usuarios</a></p>';
 
-        echo '<p><a class="btn btn-lg btn-success" href="'.Yii::$app->request->BaseUrl.'/socio">Socios</a></p>';
+        echo '<p><a class="btn btn-lg btn-success" href="'.Yii::$app->request->BaseUrl.'/index.php/socio">Socios</a></p>';
 
-        echo '<p><a class="btn btn-lg btn-success" href="'.Yii::$app->request->BaseUrl.'/membresia">Membresia</a></p>';
+        echo '<p><a class="btn btn-lg btn-success" href="'.Yii::$app->request->BaseUrl.'/index.php/membresia">Membresia</a></p>';
+        echo '<p><a class="btn btn-lg btn-success" href="'.Yii::$app->request->BaseUrl.'/index.php/producto">Productos</a></p>';
     }
 
 ?>
