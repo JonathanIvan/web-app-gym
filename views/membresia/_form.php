@@ -13,13 +13,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'Nombre')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'idEstado')->textInput() ?>
-
     <?= $form->field($model, 'fechaCreacion')->textInput() ?>
 
     <?= $form->field($model, 'Precio')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'idUsuarioCreo')->textInput() ?>
 
     <?= $form->field($model, 'meses')->textInput() ?>
 
