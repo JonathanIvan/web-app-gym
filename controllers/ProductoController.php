@@ -178,7 +178,7 @@ class ProductoController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);       
+        $model = $this->findModel($id);         
 
         if($request->isAjax){
             /*
@@ -238,7 +238,10 @@ class ProductoController extends Controller
     public function actionDelete($id)
     {
         $request = Yii::$app->request;
-        $this->findModel($id)->delete();
+        // $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->idEstado = 3;
+        $model->save();
 
         if($request->isAjax){
             /*
