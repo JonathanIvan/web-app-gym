@@ -40,6 +40,7 @@ class Membresia extends \yii\db\ActiveRecord
             [['idEstado', 'idUsuarioCreo', 'meses'], 'integer'],
             [['fechaCreacion', 'horaInicio', 'horaFinal'], 'safe'],
             [['Precio'], 'number'],
+            [['Nombre', 'Precio', 'meses', 'horaInicio', 'horaFinal'], 'required'],
             [['Nombre'], 'string', 'max' => 45],
             [['idEstado'], 'exist', 'skipOnError' => true, 'targetClass' => Estado::className(), 'targetAttribute' => ['idEstado' => 'idEstados']],
             [['idUsuarioCreo'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['idUsuarioCreo' => 'idUsuario']],
