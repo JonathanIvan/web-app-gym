@@ -118,7 +118,7 @@ class ProductoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new Producto",
+                    'title'=> "Nuevo Producto",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -126,18 +126,25 @@ class ProductoController extends Controller
                                 Html::button('Guardar',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
-                return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new Producto",
-                    'content'=>'<span class="text-success">Create Producto success</span>',
-                    'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Agregar otro',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-        
-                ];         
+            }else if($model->load($request->post()) && $model->validate()){
+                
+                $model->idEstado = 1;                                   
+                $model->fechaCreacion = new Expression('NOW()');
+
+                if($model->save()){
+                    return [
+                        'forceReload'=>'#crud-datatable-pjax',
+                        'title'=> "Agrega otro producto",
+                        'content'=>'<span class="text-success">Producto se registró con éxito</span>',
+                        'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::a('Agregar otro',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+            
+                    ];         
+                }
+
             }else{           
                 return [
-                    'title'=> "Create new Producto",
+                    'title'=> "Nuevo Producto",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -180,7 +187,7 @@ class ProductoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update Producto #".$id,
+                    'title'=> "Modificar Producto #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -199,7 +206,7 @@ class ProductoController extends Controller
                 ];    
             }else{
                  return [
-                    'title'=> "Update Producto #".$id,
+                    'title'=> "Modificar Producto #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),

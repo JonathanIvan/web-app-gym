@@ -11,11 +11,9 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'Nombre')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'Nombre')->textInput(['maxlength' => true, 'placeholder' => 'Nombre del producto']) ?>
 
-    <?= $form->field($model, 'Descripcion')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'fechaCreacion')->textInput() ?>
+    <?= $form->field($model, 'Descripcion')->textInput(['maxlength' => true, 'placeholder' => 'Escribe una descripción']) ?>
 
     <?= $form->field($model, 'Precio')->textInput(['maxlength' => true]) ?>
 
