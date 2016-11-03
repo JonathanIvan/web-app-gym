@@ -118,31 +118,36 @@ class MembresiaController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new Membresia",
+                    'title'=> "Agregar Membresia",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Guardar',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
-                return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new Membresia",
-                    'content'=>'<span class="text-success">Create Membresia success</span>',
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-        
-                ];         
+            }else if($model->load($request->post()) && $model->validate()){
+                $model->idEstado = 1;
+                $model->fechaCreacion = new Expression('NOW()');
+
+                if($model->save()){
+                    return [
+                        'forceReload'=>'#crud-datatable-pjax',
+                        'title'=> "Agregar nueva membresia",
+                        'content'=>'<span class="text-success">Create Membresia success</span>',
+                        'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::a('Agregar otra',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+            
+                    ];  
+                }       
             }else{           
                 return [
-                    'title'=> "Create new Membresia",
+                    'title'=> "Registrar Membresia",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Guardar',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }
@@ -180,12 +185,12 @@ class MembresiaController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update Membresia #".$id,
+                    'title'=> "Modificar Membresia #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Guardar',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
@@ -194,17 +199,17 @@ class MembresiaController extends Controller
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                            Html::a('Modificar',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
             }else{
                  return [
-                    'title'=> "Update Membresia #".$id,
+                    'title'=> "Modificar Membresia #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Guardar',['class'=>'btn btn-primary','type'=>"submit"])
                 ];        
             }
         }else{
@@ -231,8 +236,10 @@ class MembresiaController extends Controller
     public function actionDelete($id)
     {
         $request = Yii::$app->request;
-        $this->findModel($id)->delete();
-
+        // $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->idEstado = 3;
+        $model->save();
         if($request->isAjax){
             /*
             *   Process for ajax request
