@@ -42,6 +42,7 @@ class Producto extends \yii\db\ActiveRecord
             [['Precio', 'Costo'], 'number'],
             [['Nombre'], 'string', 'max' => 45],
             [['Descripcion'], 'string', 'max' => 100],
+            [['Nombre', 'Precio', 'Costo'], 'required'],
             [['idEstado'], 'exist', 'skipOnError' => true, 'targetClass' => Estado::className(), 'targetAttribute' => ['idEstado' => 'idEstados']],
             [['idUsuarioCreo'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['idUsuarioCreo' => 'idUsuario']],
         ];
