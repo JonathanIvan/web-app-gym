@@ -21,7 +21,10 @@ use yii\widgets\DetailView;
             ],
             'Usuario',
             'Nombre',
-            'fechaCreacion',
+            [
+            'label' => 'Fecha creación',
+            'value' => date('d/m/Y g:i a', strtotime($model->fechaCreacion)),
+            ]
             'Password',
             'Token',
         ],

@@ -12,19 +12,19 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
 
-    <?= $form->field($modelUsuario, 'Usuario')->textInput(['maxlength' => true], ['autofocus' => true]) ?>
+    <?= $form->field($modelUsuario, 'Usuario')->textInput(['maxlength' => true, 'placeholder' => 'ej. fmarquez'], ['autofocus' => true]) ?>
 
-    <?= $form->field($modelUsuario, 'Password')->passwordInput(['maxlength' => true]) ?>
+    <?= $form->field($modelUsuario, 'Password')->passwordInput(['maxlength' => true, 'placeholder' => 'ej. ********']) ?>
 
     <?=$form->field($modelUsuario, 'Nombre')->dropDownList($roles, ['prompt'=>'-Elije un rol-']) ?>
 
-    <?= $form->field($modelSocio, 'Nombre')->textInput(['autofocus' => true]) ?>
+    <?= $form->field($modelSocio, 'Nombre')->textInput(['autofocus' => true, 'placeholder' => 'ej. Federico Roberto']) ?>
 
-    <?= $form->field($modelSocio, 'Paterno')->textInput(['autofocus' => true]) ?>
+    <?= $form->field($modelSocio, 'Paterno')->textInput(['autofocus' => true, 'placeholder' => 'ej. Márquez']) ?>
 
-    <?= $form->field($modelSocio, 'Materno')->textInput(['autofocus' => true]) ?>
+    <?= $form->field($modelSocio, 'Materno')->textInput(['autofocus' => true, 'placeholder' => 'ej. Pérez']) ?>
 
-    <?= $form->field($modelSocio, 'Telefono')->textInput(['autofocus' => true]) ?>
+    <?= $form->field($modelSocio, 'Telefono')->textInput(['autofocus' => true, 'placeholder' => 'ej. 3311121314 (10 dígitos)']) ?>
 
 
 

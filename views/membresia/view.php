@@ -10,15 +10,17 @@ use yii\widgets\DetailView;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'idMembresia',
             'Nombre',
-            'idEstado',
-            'fechaCreacion',
             'Precio',
-            'idUsuarioCreo',
             'meses',
-            'horaInicio',
-            'horaFinal',
+            [
+            'label' => 'Hora entrada',
+            'value' => date('g:i a', strtotime($model->horaInicio)),
+            ],
+            [
+            'label' => 'Hora salida',
+            'value' => date('g:i a', strtotime($model->horaFinal)),
+            ],
         ],
     ]) ?>
 

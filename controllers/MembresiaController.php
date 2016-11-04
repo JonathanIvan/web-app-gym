@@ -13,6 +13,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\db\Expression;
 
 /**
  * MembresiaController implements the CRUD actions for Membresia model.
@@ -86,12 +87,12 @@ class MembresiaController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "Membresia #".$id,
+                    'title'=> "Membresia: ".$this->findModel($id)->Nombre,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                            Html::a('Modificar',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
         }else{
             return $this->render('view', [
@@ -127,6 +128,7 @@ class MembresiaController extends Controller
         
                 ];         
             }else if($model->load($request->post()) && $model->validate()){
+
                 $model->idEstado = 1;
                 $model->fechaCreacion = new Expression('NOW()');
 
@@ -134,7 +136,7 @@ class MembresiaController extends Controller
                     return [
                         'forceReload'=>'#crud-datatable-pjax',
                         'title'=> "Agregar nueva membresia",
-                        'content'=>'<span class="text-success">Create Membresia success</span>',
+                        'content'=>'<span class="text-success">Membresia se agregó con éxito success</span>',
                         'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::a('Agregar otra',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
             

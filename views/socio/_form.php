@@ -11,15 +11,15 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'Nombre')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'Nombre')->textInput(['maxlength' => true, 'placeholder' => 'ej. Roberto Carlos']) ?>
 
-    <?= $form->field($model, 'Paterno')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'Paterno')->textInput(['maxlength' => true, 'placeholder' => 'ej. Di Maria']) ?>
 
-    <?= $form->field($model, 'Materno')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'Materno')->textInput(['maxlength' => true, 'placeholder' => 'ej. Vitolo']) ?>
 
-    <?= $form->field($model, 'Telefono')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'Telefono')->textInput(['maxlength' => true, 'placeholder' => 'ej. 3312141516']) ?>
 
-    <?= $form->field($model, 'Observaciones')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'Observaciones')->textInput(['maxlength' => true, 'placeholder' => '....']) ?>
 
 
 

@@ -13,6 +13,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\db\Expression;
 
 /**
  * ProductoController implements the CRUD actions for Producto model.
@@ -86,7 +87,7 @@ class ProductoController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "Producto #".$id,
+                    'title'=> "Producto: ".$this->findModel($id)->Nombre,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),

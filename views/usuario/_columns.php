@@ -21,9 +21,12 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'Nombre',
     ],
-     [
+    [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'fechaCreacion',
+        'value' => function($model){
+            return date('d/m/Y g:i a', strtotime($model->fechaCreacion));
+        }
     ],
     [
         'class'=>'\kartik\grid\DataColumn',

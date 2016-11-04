@@ -20,7 +20,10 @@ use yii\widgets\DetailView;
             'Precio',
             // 'idUsuarioCreo',
             'Costo',
-            'fechaCreacion',
+            [
+            'label' => 'Fecha creación',
+            'value' => date('d/m/Y g:i a', strtotime($model->fechaCreacion)),
+            ]
         ],
     ]) ?>
 

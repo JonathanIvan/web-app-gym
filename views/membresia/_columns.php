@@ -30,10 +30,16 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'horaInicio',
+        'value' => function($model){
+            return date('g:i a', strtotime($model->horaInicio));
+        }
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'horaFinal',
+        'value' => function($model){
+            return date('g:i a', strtotime($model->horaFinal));
+        }
     ],
     // [
     //     'class'=>'\kartik\grid\DataColumn',
@@ -42,8 +48,8 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'Estado',
-        'value' => function($modelSocio){
-            return Estado::findOne($modelSocio->idEstado)->Estado;
+        'value' => function($model){
+            return Estado::findOne($model->idEstado)->Estado;
         }
     ],
     // [

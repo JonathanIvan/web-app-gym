@@ -11,13 +11,13 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'Nombre')->textInput(['maxlength' => true, 'placeholder' => 'Nombre del producto']) ?>
+    <?= $form->field($model, 'Nombre')->textInput(['maxlength' => true, 'placeholder' => 'ej. Agua Ciel']) ?>
 
     <?= $form->field($model, 'Descripcion')->textInput(['maxlength' => true, 'placeholder' => 'Escribe una descripción']) ?>
 
-    <?= $form->field($model, 'Precio')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'Precio')->textInput(['maxlength' => true, 'ej. 12']) ?>
 
-    <?= $form->field($model, 'Costo')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'Costo')->textInput(['maxlength' => true, 'ej. 11.5']) ?>
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
