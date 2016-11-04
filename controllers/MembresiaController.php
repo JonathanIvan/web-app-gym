@@ -271,7 +271,8 @@ class MembresiaController extends Controller
         $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
         foreach ( $pks as $pk ) {
             $model = $this->findModel($pk);
-            $model->delete();
+            $model->idEstado = 3;
+            $model->save(); 
         }
 
         if($request->isAjax){
