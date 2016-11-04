@@ -42,7 +42,8 @@ class ProductoSearch extends Producto
      */
     public function search($params)
     {
-        $query = Producto::find();
+        // $query = Producto::find();
+        $query = Producto::find()->where(['<>', 'idEstado', 3]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
