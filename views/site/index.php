@@ -7,31 +7,19 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
-$this->title = 'My Yii Application';
+$this->title = 'GYM';
 ?>
 <div class="site-index">
 
-<?php
-    if(!Yii::$app->user->isGuest){
 
-        echo '<p><a class="btn btn-lg btn-success" href="'.Yii::$app->request->BaseUrl.'/index.php/usuario">Usuarios</a></p>';
-
-        echo '<p><a class="btn btn-lg btn-success" href="'.Yii::$app->request->BaseUrl.'/index.php/socio">Socios</a></p>';
-
-        echo '<p><a class="btn btn-lg btn-success" href="'.Yii::$app->request->BaseUrl.'/index.php/membresia">Membresia</a></p>';
-        echo '<p><a class="btn btn-lg btn-success" href="'.Yii::$app->request->BaseUrl.'/index.php/producto">Productos</a></p>';
-    }
-
-?>
     <div class="jumbotron">
-        <h1>Congratulations!</h1>
+        <h1>GYM!</h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <p class="lead">Aplicación para gimnasios.</p>
+        
     </div>
 
-    <div class="body-content">
+<!--     <div class="body-content">
 
         <div class="row">
             <div class="col-lg-4">
@@ -66,5 +54,5 @@ $this->title = 'My Yii Application';
             </div>
         </div>
 
-    </div>
+    </div> -->
 </div>
