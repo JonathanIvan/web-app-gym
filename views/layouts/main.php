@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\models\Configuracion;
 
 AppAsset::register($this);
 ?>
@@ -27,7 +28,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'GYM!',
+        'brandLabel' => Configuracion::findOne(1)->NombreGimnacio,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -41,6 +42,7 @@ AppAsset::register($this);
             !Yii::$app->user->isGuest ? ['label' => 'Socios', 'url' => ['/socio']] : "",
             !Yii::$app->user->isGuest ? ['label' => 'Membresias', 'url' => ['/membresia']] : "",
             !Yii::$app->user->isGuest ? ['label' => 'Productos', 'url' => ['/producto']] : "",
+            !Yii::$app->user->isGuest ? ['label' => 'Configuracion', 'url' => ['/configuracion/update?id=1'], 'role' => 'modal-remote'] : "",
             Yii::$app->user->isGuest ? (
                 ['label' => 'Entrar', 'url' => ['/site/login']]
             ) : (
@@ -69,7 +71,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; GYM! <?= date('Y') ?></p>
+        <p class="pull-left">&copy; <?php echo Configuracion::findOne(1)->NombreGimnacio; ?> <?= date('Y') ?></p>
 
     </div>
 </footer>

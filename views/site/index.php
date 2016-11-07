@@ -6,16 +6,23 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\models\Configuracion;
 
-$this->title = 'GYM';
+
+$this->title = Configuracion::findOne(1)->NombreGimnacio;;
 ?>
 <div class="site-index">
 
 
     <div class="jumbotron">
-        <h1>GYM!</h1>
+        <h1><?php echo Configuracion::findOne(1)->NombreGimnacio; ?></h1>
 
         <p class="lead">Aplicación para gimnasios.</p>
+        
+        <p>
+            <a class="btn btn-default" href="<?php echo Yii::$app->homeUrl; ?>/entrada">Entrada de socio &raquo;</a>
+        </p>
+
         
     </div>
 
