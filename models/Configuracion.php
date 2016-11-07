@@ -40,6 +40,8 @@ class Configuracion extends \yii\db\ActiveRecord
             [['NombreGimnacio', 'Telefono', 'RFC'], 'string', 'max' => 45],
             [['Domicilio'], 'string', 'max' => 200],
             [['Mensaje'], 'string', 'max' => 100],
+            [['NombreGimnacio', 'Domicilio'], 'required'],
+
         ];
     }
 
