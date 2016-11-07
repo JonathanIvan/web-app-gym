@@ -1,7 +1,5 @@
 <?php
-
 namespace app\controllers;
-
 use Yii;
 use app\models\Usuario;
 use app\models\UsuarioSearch;
@@ -16,7 +14,6 @@ use yii\filters\AccessControl;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\db\Expression;
-
 /**
  * UsuarioController implements the CRUD actions for Usuario model.
  */
@@ -52,7 +49,6 @@ class UsuarioController extends Controller
             ],
         ];
     }
-
     /**
      * Lists all Usuario models.
      * @return mixed
@@ -61,14 +57,11 @@ class UsuarioController extends Controller
     {    
         $searchModel = new UsuarioSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
-
-
     /**
      * Displays a single Usuario model.
      * @param integer $id
@@ -93,7 +86,6 @@ class UsuarioController extends Controller
             ]);
         }
     }
-
     /**
      * Creates a new Usuario model.
      * For ajax request will return json object
@@ -103,12 +95,10 @@ class UsuarioController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-
         $idUsuarioLogueado = Yii::$app->user->identity->id;
         $modelUsuario = new Usuario();
         $modelSocio = new Socio();
         $roles = ArrayHelper::map(Roles::find()->asArray()->all(), 'nombre', 'nombre');
-
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -129,20 +119,15 @@ class UsuarioController extends Controller
             }else if($modelUsuario->load($request->post()) && $modelUsuario->validate()){
                 
                 if($modelSocio->load($request->post()) && $modelSocio->validate() ){
-
                     $modelUsuario->idEstado = 1;                    
                     $modelUsuario->fechaCreacion = new Expression('NOW()');
                     $modelUsuario->Password = sha1($modelUsuario->Password);
                     $modelUsuario->Token = sha1($modelUsuario->Usuario . $modelUsuario->Nombre);
-
                     if($modelUsuario->save()){
-
                         $modelSocio->idEstado = 1;    
                         $modelSocio->fechaCreacion = new Expression('NOW()');
-
                         $modelSocio->idUsuarioCreo = $idUsuarioLogueado;
                         $modelSocio->idUsuario = $modelUsuario->idUsuario;
-
                         if($modelSocio->save()){
                             return [
                             'forceReload'=>'#crud-datatable-pjax',
@@ -187,7 +172,6 @@ class UsuarioController extends Controller
         }
        
     }
-
     /**
      * Updates an existing Usuario model.
      * For ajax request will return json object
@@ -201,10 +185,8 @@ class UsuarioController extends Controller
         $modelUsuario = $this->findModel($id);       
         $modelSocio = $this->findModelSocio($modelUsuario->idUsuario);
         $roles = ArrayHelper::map(Roles::find()->asArray()->all(), 'nombre', 'nombre');
-
         $PasswordAnterior = $modelUsuario->Password;
         $modelUsuario->Password = "";
-
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -222,13 +204,9 @@ class UsuarioController extends Controller
                                 Html::button('Modificar',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($modelUsuario->load($request->post()) && $modelUsuario->validate()){
-
                 if($modelSocio->load($request->post()) && $modelSocio->validate() ){
-
                     $modelUsuario->Password = sha1($modelUsuario->Password);
-
                     if($modelUsuario->save() && $modelSocio->save() ){
-
                             return [
                             'forceReload'=>'#crud-datatable-pjax',
                             'title'=> "Usuario #".$id,
@@ -259,13 +237,9 @@ class UsuarioController extends Controller
             *   Process for non-ajax request
             */
             if ($modelUsuario->load($request->post()) && $modelUsuario->validate()) {
-
                 if($modelSocio->load($request->post()) && $modelSocio->validate() ){
-
                     $modelUsuario->Password = sha1($modelUsuario->Password);
-
                     if($modelUsuario->save() && $modelSocio->save() ){
-
                         return $this->redirect(['index']);                         
                     
                     }                    
@@ -280,7 +254,6 @@ class UsuarioController extends Controller
             }
         }
     }
-
     /**
      * Delete an existing Usuario model.
      * For ajax request will return json object
@@ -295,7 +268,6 @@ class UsuarioController extends Controller
         $modelUsuario = $this->findModel($id);
         $modelUsuario->idEstado = 3;
         $modelUsuario->save();
-
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -308,10 +280,7 @@ class UsuarioController extends Controller
             */
             return $this->redirect(['index']);
         }
-
-
     }
-
      /**
      * Delete multiple existing Usuario model.
      * For ajax request will return json object
@@ -328,7 +297,6 @@ class UsuarioController extends Controller
             $model->idEstado = 3;
             $model->save();
         }
-
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -343,7 +311,6 @@ class UsuarioController extends Controller
         }
        
     }
-
     /**
      * Desactiva un usuario.
      * For ajax request will return json object
@@ -354,22 +321,17 @@ class UsuarioController extends Controller
     public function actionDesactivar($id)
     {
         $request = Yii::$app->request;
-
         $modelUsuario = $this->findModel($id);
         $modelUsuario->idEstado = 2;
         $modelUsuario->save();
-
         if($request->isAjax)
         {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax'];
-
         }else{
             return $this->redirect(['index']);
         }
-
     }
-
      /**
      * Activa un usuario.
      * For ajax request will return json object
@@ -380,22 +342,17 @@ class UsuarioController extends Controller
     public function actionActivar($id)
     {
         $request = Yii::$app->request;
-
         $modelUsuario = $this->findModel($id);
         $modelUsuario->idEstado = 1;
         $modelUsuario->save();
-
         if($request->isAjax)
         {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax'];
-
         }else{
             return $this->redirect(['index']);
         }
-
     }
-
     /**
      * Finds the Usuario model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -411,7 +368,6 @@ class UsuarioController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-
     protected function findModelSocio($idUsuario)
     {
         if (($model = Socio::find()->where(['idUsuario' => $idUsuario])->one()) !== null) {
