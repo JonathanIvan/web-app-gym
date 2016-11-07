@@ -27,7 +27,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'GYM - Tomás Del Fierro',
+        'brandLabel' => 'GYM!',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -37,10 +37,10 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Inicio', 'url' => ['/site/index']],
-            ['label' => 'Usuarios', 'url' => ['/usuario']],
-            ['label' => 'Socios', 'url' => ['/socio']],
-            ['label' => 'Membresias', 'url' => ['/membresia']],
-            ['label' => 'Productos', 'url' => ['/producto']],
+            !Yii::$app->user->isGuest ? ['label' => 'Usuarios', 'url' => ['/usuario']] : "",
+            !Yii::$app->user->isGuest ? ['label' => 'Socios', 'url' => ['/socio']] : "",
+            !Yii::$app->user->isGuest ? ['label' => 'Membresias', 'url' => ['/membresia']] : "",
+            !Yii::$app->user->isGuest ? ['label' => 'Productos', 'url' => ['/producto']] : "",
             Yii::$app->user->isGuest ? (
                 ['label' => 'Entrar', 'url' => ['/site/login']]
             ) : (
@@ -69,7 +69,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; GYM - Tomás Del Fierro <?= date('Y') ?></p>
+        <p class="pull-left">&copy; GYM! <?= date('Y') ?></p>
 
     </div>
 </footer>
