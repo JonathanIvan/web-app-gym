@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Configuracion;
+use app\models\User;
+
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -13,6 +15,8 @@ use yii\helpers\Html;
 use yii\web\UploadedFile;
 use app\models\SubirArchivo;
 use yii\db\Expression;
+use yii\filters\AccessControl;
+
 
 /**
  * ConfiguracionController implements the CRUD actions for Configuracion model.
