@@ -25,6 +25,21 @@ class ConfiguracionController extends Controller
     public function behaviors()
     {
         return [
+        'access' => [
+                'class' => AccessControl::className(),
+                'only' =>['index', 'view', 'create', 'update', 'delete'],
+                'rules' => [
+                    [
+                        'actions' => ['view', 'update'],
+                        'allow' =>true,
+                        'roles' => ['@'],
+                        'matchCallback' => function($rule, $action){
+                            $valid_roles = ["admin"];
+                            return User::roleInArray($valid_roles) && User::isActive();
+                        }
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
