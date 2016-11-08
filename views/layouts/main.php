@@ -42,7 +42,7 @@ AppAsset::register($this);
             !Yii::$app->user->isGuest ? ['label' => 'Socios', 'url' => ['/socio']] : "",
             !Yii::$app->user->isGuest ? ['label' => 'Membresias', 'url' => ['/membresia']] : "",
             !Yii::$app->user->isGuest ? ['label' => 'Productos', 'url' => ['/producto']] : "",
-            !Yii::$app->user->isGuest ? ['label' => 'Configuracion', 'url' => ['/configuracion/update?id=1'], 'role' => 'modal-remote'] : "",
+            !Yii::$app->user->isGuest && Yii::$app->user->identity->Nombre == "admin" ? ['label' => 'Configuracion', 'url' => ['/configuracion/update?id=1'], 'role' => 'modal-remote'] : "",
             Yii::$app->user->isGuest ? (
                 ['label' => 'Entrar', 'url' => ['/site/login']]
             ) : (
