@@ -26,7 +26,6 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    <Label>Layout de Entrada</Label>
 
     <div class="container">
         <?= Breadcrumbs::widget([
